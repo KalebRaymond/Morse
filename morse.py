@@ -3,68 +3,30 @@ class node:
 		self.left = None
 		self.right = None
 		self.c = c
+
+#Generates tree based on string in level order. Each node holds a single character from the string.
+def create_morse_tree(root, vals):
+	queue = []
+	queue.append(root)
+	curIndex = 0
+	while(curIndex < len(vals)):
+		if(vals[curIndex] == '-'):
+			queue[0].c = ""
+		else:
+			queue[0].c = vals[curIndex]
 		
-
-
-# class tree: 
-	# def __init__(self, c):
-		# self.root = node(c)
-	
-	# def __init__(self, rootc, leftc, rightc):
-		# self.root = node(rootc)
+		queue[0].left = node(None)
+		queue[0].right = node(None)
+		queue.append(queue[0].left)
+		queue.append(queue[0].right)
+		queue.pop(0)
+		curIndex += 1
 		
-	# def setLeft(self, c):
-		# self.left = node(c)
-	# def getLeft(self)
-		# return 
-
+		
 n = node(None)
+create_morse_tree(n, "-ETIANMSURWDKGOHVF-L-PJBXCYZQ--54-3---2-------16-------7---8-90")
 
-nE = node('E')
-n.left = nE
-nT = node('T')
-n.right = nT
-
-nI = node('I')
-nE.left = nI
-nA = node('A')
-nE.right = nA
-nN = node('N')
-nT.left = nN
-nM = node('M')
-nT.right = nM
-
-nS = node('S')
-nI.left = nS
-nU = node('U')
-nI.right = nU
-nR = node('R')
-nA.left = nR
-nW = node('W')
-nA.right = nW
-nD = node('D')
-nN.left = nD
-nK = node('K')
-nN.right = nK
-nG = node('G')
-nM.left = nG
-nO = node('O')
-nM.right = nO
-
-nH = node('H')
-nS.left = nH
-nV = node('V')
-nS.right = nV
-nF = node('F')
-nU.left = nF
-n2parent = node(None)
-nU.right = n2parent
-nL = node('L')
-nR.left = nL
-nP = node('P')
-nW.left = nP
-
-morse = "... ..- .-. ."
+morse = ".. - / .-- .- ... / - .... . / -... . ... - / --- ..-. / - .. -- . ... / .. - / .-- .- ... / - .... . / .-- --- .-. ... - / --- ..-. / - .. -- . ..."
 translated = ""
 cur_node = n
 for c in morse:
@@ -72,8 +34,10 @@ for c in morse:
 		cur_node = cur_node.left
 	elif(c == "-"):
 		cur_node = cur_node.right
+	elif(c == "/"):
+		translated += " "
 	else:
-	#TRY AND CATCH INCORRECT CHARACTERS IE '........................................'
+	#TRY AND CATCH ILLEGAL CHARACTERS
 		translated += cur_node.c
 		cur_node = n
 translated += cur_node.c
